@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소정에게 보내는 사랑 편지 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Gamja+Flower:wght@400&family=Poor+Story:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poor Story', cursive;
+            background: linear-gradient(135deg, #FFE4E8 0%, #FFF0F3 50%, #FFEBF0 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Floating hearts and stars animation */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-heart, .floating-star {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.3;
+        }
+        
+        .floating-heart {
+            color: #FF69B4;
+            font-size: 1.5rem;
+            animation-delay: var(--delay, 0s);
+        }
+        
+        .floating-star {
+            color: #FFD700;
+            font-size: 1.2rem;
+            animation-delay: var(--delay, 0s);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(-10px) rotate(-5deg); }
+            75% { transform: translateY(-25px) rotate(3deg); }
+        }
+        
+        /* Main container */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Envelope styling */
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .envelope:hover {
+            transform: scale(1.05) translateY(-5px);
+            filter: drop-shadow(0 10px 20px rgba(255, 105, 180, 0.3));
+        }
+        
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
+            border-radius: 10px;
+            border: 3px solid #FF69B4;
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+        }
+        
+        .envelope-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
+            border-radius: 10px;
+            border: 3px solid #FF69B4;
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+            z-index: 2;
+        }
+        
+        .envelope-front::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 100px solid #FFB6C1;
+            border-radius: 5px;
+        }
+        
+        .envelope.opened .envelope-front {
+            transform: rotateX(-120deg);
+        }
+        
+        /* Heart seal */
+        .heart-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #FF1493;
+            z-index: 3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            user-select: none;
+        }
+        
+        .heart-seal:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            color: #FF69B4;
+        }
+        
+        .heart-seal.crack-1 {
+            animation: crack1 0.3s ease;
+        }
+        
+        .heart-seal.crack-2 {
+            animation: crack2 0.3s ease;
+        }
+        
+        .heart-seal.crack-3 {
+            animation: crack3 0.5s ease forwards;
+        }
+        
+        @keyframes crack1 {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); filter: brightness(1.5); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        @keyframes crack2 {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.3); filter: brightness(2); }
+            100% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+        
+        @keyframes crack3 {
+            0% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.5); filter: brightness(3); }
+            100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        }
+        
+        /* Letter paper */
+        .letter-paper {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 250px;
+            height: 180px;
+            background: linear-gradient(135deg, #FFFBF0 0%, #FFF8DC 100%);
+            border: 2px solid #FFB6C1;
+            border-radius: 10px;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 100;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            filter: blur(20px);
+        }
+        
+        .letter-paper.expanding {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            filter: blur(10px);
+        }
+        
+        .letter-paper.fullscreen {
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0;
+            transform: translate(-50%, -50%) scale(1);
+            filter: blur(0px);
+            overflow-y: auto;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+        
+        /* Letter content */
+        .letter-content {
+            opacity: 0;
+            transition: opacity 1s ease 0.5s;
+            font-family: 'Poor Story', cursive;
+            line-height: 1.8;
+            color: #4A4A4A;
+            font-size: 1rem;
+        }
+        
+        .letter-paper.fullscreen .letter-content {
+            opacity: 1;
+        }
+        
+        .letter-content h1 {
+            font-family: 'Cute Font', cursive;
+            font-size: 2.5rem;
+            color: #FF1493;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+        }
+        
+        .letter-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .letter-content .highlight {
+            color: #FF1493;
+            font-weight: bold;
+            text-decoration: underline;
+            text-decoration-color: #FFB6C1;
+            text-decoration-thickness: 2px;
+        }
+        
+        .letter-content .signature {
+            text-align: right;
+            font-family: 'Cute Font', cursive;
+            font-size: 1.5rem;
+            color: #FF69B4;
+            margin-top: 40px;
+        }
+        
+        /* Close button */
+        .close-button {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #FF69B4, #FF1493);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-family: 'Poor Story', cursive;
+            font-size: 1.1rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+            z-index: 1000;
+        }
+        
+        .close-button.visible {
+            opacity: 1;
+        }
+        
+        .close-button:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 12px 25px rgba(255, 105, 180, 0.6);
+        }
+        
+        /* Thank you message */
+        .thank-you {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #FFE4E8, #FFF0F3);
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid #FF69B4;
+            text-align: center;
+            font-family: 'Cute Font', cursive;
+            font-size: 1.8rem;
+            color: #FF1493;
+            opacity: 0;
+            scale: 0;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1001;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+        }
+        
+        .thank-you.visible {
+            opacity: 1;
+            scale: 1;
+        }
+        
+        .thank-you .heart {
+            font-size: 3rem;
+            color: #FF1493;
+            margin: 20px 0;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Instructions */
+        .instructions {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-family: 'Poor Story', cursive;
+            color: #FF69B4;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.4; }
+        }
+        
+        /* Copyright */
+        .copyright {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #FF69B4;
+            opacity: 0.6;
+            text-align: center;
+            z-index: 1002;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .envelope {
+                width: 250px;
+                height: 170px;
+            }
+            
+            .letter-paper.fullscreen {
+                padding: 20px;
+            }
+            
+            .letter-content {
+                font-size: 0.9rem;
+            }
+            
+            .letter-content h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .envelope {
+                width: 200px;
+                height: 140px;
+            }
+            
+            .heart-seal {
+                font-size: 2.5rem;
+            }
+            
+            .letter-content {
+                font-size: 0.8rem;
+                line-height: 1.6;
+            }
+            
+            .letter-content h1 {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+        }
+        
+        /* Smartwatch compatibility */
+        @media (max-width: 300px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .envelope {
+                width: 150px;
+                height: 100px;
+            }
+            
+            .heart-seal {
+                font-size: 2rem;
+            }
+            
+            .letter-content {
+                font-size: 0.7rem;
+                line-height: 1.4;
+            }
+            
+            .letter-content h1 {
+                font-size: 1.5rem;
+            }
+            
+            .close-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating decorative elements -->
+    <div class="floating-elements" id="floatingElements"></div>
+    
+    <div class="container" id="mainContainer">
+        <!-- Envelope -->
+        <div class="envelope" id="envelope">
+            <div class="envelope-back"></div>
+            <div class="envelope-front"></div>
+            <div class="heart-seal" id="heartSeal">💖</div>
+        </div>
+        
+        <!-- Instructions -->
+        <div class="instructions" id="instructions">
+            💕 편지를 열려면 하트를 3번 터치하세요 💕
+        </div>
+    </div>
+    
+    <!-- Letter paper -->
+    <div class="letter-paper" id="letterPaper">
+        <div class="letter-content" id="letterContent">
+            <h1>소정아 💕</h1>
+            
+            <p>오늘은 너에게 특별한 걸 주고 싶었어… 언제든 나를 가까이 느끼고 싶을 때 꺼내 볼 수 있는, 마음속에 간직할 수 있는 무언가를.</p>
+            
+            <p>이건 내 마음을 담은 감사의 표시야 — <span class="highlight">나의 여자친구가 되어주고, 나를 기다려주고, 이해해주고</span>, 그리고 네 마음이 외로울 때조차 내 곁에 있어준 너에게.</p>
+            
+            <p>먼저… <span class="highlight">미안하다고 말하고 싶어.</span><br>
+            처음에 내가 너를 먼저 찾아가지 못한 것, 그리고 그로 인해 네가 외로움을 느끼게 했던 시간들… 정말 미안해.</p>
+            
+            <p>정말 너를 보러 가고 싶었고, 수없이 생각했지만, 그럴 여유가 없었어. 그리고 조금이라도 모아두면, 아버지가 생활비를 도와달라고 하셔서… 결국 다 없어졌어.</p>
+            
+            <p>하지만 <span class="highlight">네 덕분에 지금은 노트북도 있고</span>, 내가 정말 열정을 쏟는 그 과정(수업)을 들을 수 있는 돈도 있어. 이건 나의 미래를 열어줄 큰 문이 될 거야.</p>
+            
+            <p>이제는 좀 더 자유롭고 편하게 움직일 수 있어… <span class="highlight">그건 전부 너 덕분이야.</span></p>
+            
+            <p>너는 내가 말로 다 설명할 수 없을 만큼 내 삶을 더 좋게 만들어줬어.<br>
+            <span class="highlight">너는 내게 하나님이 주신 축복이야.</span></p>
+            
+            <p><span class="highlight">나의 가장 큰 선물, 가장 아름다운 보물, 내가 세상에서 가장 사랑하는 사람, 나의 꿈, 나의 목표, 나의 최우선이야.</span></p>
+            
+            <p>나는 국제 회사에서 좋은 직장을 얻기 위해 열심히 노력할 거야 (미국이나 캐나다를 목표로 하고 있어). 그래서 거기서 너를 만날 수도 있고, 서로 번갈아 가며 자주 만날 수 있게 하려고.</p>
+            
+            <p><span class="highlight">기억해줘 — 너는 이제 더 이상 혼자가 아니야.</span><br>
+            우리는 이제 변화를 만들 수 있는 힘이 있어. 사랑과 헌신이 가득한, 평범하고 안정된 연애를 할 수 있어.</p>
+            
+            <p><span class="highlight">내 마음은 단기적인 게 아니야.</span><br>
+            난 너와 결혼하고, 아이도 갖고 싶어 — 전에 말한 것처럼.</p>
+            
+            <p>너와 너의 가족에게 진심으로 감사하고, 꼭 직접 만나 인사드리고 싶어. 그리고 언젠가 너도 내 가족을 만나주길 바라.</p>
+            
+            <p>아마 네가 처음 나를 만나러 올 때, 우리 관계를 아버지께는 바로 말하지 않을 수도 있어. 나는 내가 좀 더 안정적인 수입을 얻을 때 말씀드리고 싶어.</p>
+            
+            <p>하지만 어떤 상황이든, <span class="highlight">너와 함께한 모든 순간은 특별했어</span> — 모든 웃음, 모든 눈물, 모든 시선, 모든 키스, 그리고 모든 작은 행동들까지…</p>
+            
+            <p><span class="highlight">그 모든 게 내 인생에서 가장 큰 모험이었어.</span></p>
+            
+            <p>그 모든 순간들이 나에게 이유를 주고, 목표를 주고, 꿈을 주고, 나를 하나님께 더 가까이 이끌었어. 내가 복음과 은혜에 대해 너와 나눴던 그 날을 절대 잊지 못해.</p>
+            
+            <p>소정아… <span class="highlight">우리의 관계는 나에게 진정한 사랑의 아름다움을 가르쳐줬어.</span></p>
+            
+            <p>그래서 너에게 잊지 못할 선물을 주고 싶었고, 내 프로그래밍 실력을 이용해서 이 가상의 편지를 만들었어. <span class="highlight">이건 단순한 글이 아니라, 네가 영원히 간직할 수 있는 내 마음의 한 조각이야.</span></p>
+            
+            <p><span class="highlight">나는 너를 사랑해. 진심으로, 깊이.</span><br>
+            내가 너에게 느끼는 이 감정은 그 누구에게도 느껴본 적 없는 거야.</p>
+            
+            <p>너를 생각하는 것만으로도 웃게 되는, 너무나도 따뜻하고 진짜인 마음이야. <span class="highlight">네가 나를 만나러 온다고 생각하면, 너무 행복해서 당장이라도 뛰어오를 것 같아.</span></p>
+            
+            <p><span class="highlight">네가 내 앞에 서 있는 그 날…</span><br>
+            나는 잠시 얼어붙을 거고, 눈물이 흐를 거야. 그리고 바로 네 품에 달려가서 꽉 안고, "사랑해"라고 말할 거야.</p>
+            
+            <p>그 순간, 우리의 거리는 완전히 사라질 거야. 네 아름다운 눈을 바라보고, 네 얼굴을 쓰다듬고, 그리고 키스할 거야 — <span class="highlight">네가 느껴본 적 없는 가장 순수하고 깊은 사랑으로.</span></p>
+            
+            <p>그리고 여기 내 위치를 남길게. 네가 나를 찾을 수 있도록: <span class="highlight">코스타리카, 카르타고, 카르타고, 케브라디야.</span></p>
+            
+            <p>두 개의 레일이 있는 큰 트랙, 두 개의 큰 다리, 그리고 Paseo Metrópoli라는 쇼핑몰이 보이면 가까워진 거야. 거기를 지나면, 스타벅스, 맥도날드, 타코벨, 피자헛 같은 유명한 식당들이 있는 길이 나와.</p>
+            
+            <p>약국, 편의점, 여러 가게들도 보일 거야. 주유소에서 꺾어 들어가면, 시골 풍경이 있는 길이 나와. 그곳에는 쇼핑센터, 고급 슈퍼마켓, 심지어 개인 병원도 있어.</p>
+            
+            <p>그걸 보면, 너는 제대로 오고 있는 거야. 곧 내가 전에 보여줬던 공원이 나와. 그 뒤에는, 내가 공사 중일 때 보여줬던 큰 슈퍼마켓이 있어. <span class="highlight">거기서 나를 만날 수 있어.</span></p>
+            
+            <p>네가 여행 준비가 되면, 내 GPS 위치를 보내줄게. 그리고 네가 길을 알아볼 수 있도록 직접 걸으면서 안내할 거야. 그다음, 우리 함께 도시로 나가서 — 내 집과 문화, 그리고 제일 중요한… 음식들을 보여줄게.</p>
+            
+            <p><span class="highlight">소정아, 나에게 너는 전부야.</span><br>
+            나는 오직 너만 원하고, 세상이 끝날 때까지 매일 네 곁에 있고 싶어.</p>
+            
+            <p>이 편지에 답장하지 않아도 돼 — 그냥 간직해줘. 언젠가는 이 편지가 너에게 더 큰 의미가 될 거야.</p>
+            
+            <p>나는 이걸 네가 준 노트북으로, 공부를 마친 후에 썼어 — <span class="highlight">너는 나에게 창작과 꿈을 꾸게 하는 영감을 주니까.</span></p>
+            
+            <div class="signature">
+                <span class="highlight">사랑해, 나의 소정아.</span><br>
+                항상, 그리고 영원히.<br><br>
+                오직 너의,<br>
+                아론 🩷
+            </div>
+        </div>
+    </div>
+    
+    <!-- Close button -->
+    <button class="close-button" id="closeButton">편지 닫기 💕</button>
+    
+    <!-- Thank you message -->
+    <div class="thank-you" id="thankYou">
+        <div class="heart">💖</div>
+        <div>편지를 읽어주셔서 감사해요</div>
+        <div style="font-size: 1.2rem; margin-top: 10px;">소정님께 사랑을 전했습니다 💕</div>
+    </div>
+    
+    <!-- Copyright -->
+    <div class="copyright">
+        © 2025 Aaron E. Obando & 박소정 - Made with 💖 for 소정
+    </div>
+    
+    <script>
+        // Game state
+        let clickCount = 0;
+        let isLetterOpen = false;
+        let isClosing = false;
+        
+        // Elements
+        const envelope = document.getElementById('envelope');
+        const heartSeal = document.getElementById('heartSeal');
+        const letterPaper = document.getElementById('letterPaper');
+        const closeButton = document.getElementById('closeButton');
+        const thankYou = document.getElementById('thankYou');
+        const instructions = document.getElementById('instructions');
+        const mainContainer = document.getElementById('mainContainer');
+        const floatingElements = document.getElementById('floatingElements');
+        
+        // Create floating decorations
+        function createFloatingElements() {
+            const hearts = ['💖', '💕', '💗', '💘', '🩷'];
+            const stars = ['⭐', '✨', '🌟', '💫'];
+            
+            for (let i = 0; i < 15; i++) {
+                // Hearts
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.setProperty('--delay', (Math.random() * 6) + 's');
+                floatingElements.appendChild(heart);
+                
+                // Stars
+                if (i < 8) {
+                    const star = document.createElement('div');
+                    star.className = 'floating-star';
+                    star.textContent = stars[Math.floor(Math.random() * stars.length)];
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.setProperty('--delay', (Math.random() * 6 + 2) + 's');
+                    floatingElements.appendChild(star);
+                }
+            }
+        }
+        
+        // Heart seal click handler
+        heartSeal.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isLetterOpen || isClosing) return;
+            
+            clickCount++;
+            
+            // Add crack animation based on click count
+            heartSeal.classList.remove('crack-1', 'crack-2', 'crack-3');
+            
+            if (clickCount === 1) {
+                heartSeal.classList.add('crack-1');
+                // Play crack sound effect (visual feedback)
+                createSparkles(e.pageX, e.pageY);
+            } else if (clickCount === 2) {
+                heartSeal.classList.add('crack-2');
+                createSparkles(e.pageX, e.pageY);
+            } else if (clickCount >= 3) {
+                heartSeal.classList.add('crack-3');
+                setTimeout(() => {
+                    openLetter();
+                }, 500);
+            }
+        });
+        
+        // Create sparkle effect
+        function createSparkles(x, y) {
+            for (let i = 0; i < 6; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.textContent = '✨';
+                sparkle.style.position = 'fixed';
+                sparkle.style.left = (x - 10 + Math.random() * 20) + 'px';
+                sparkle.style.top = (y - 10 + Math.random() * 20) + 'px';
+                sparkle.style.fontSize = '1rem';
+                sparkle.style.color = '#FFD700';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.zIndex = '1000';
+                sparkle.style.transition = 'all 1s ease-out';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.style.transform = 'translateY(-50px) scale(0)';
+                    sparkle.style.opacity = '0';
+                }, 50);
+                
+                setTimeout(() => {
+                    document.body.removeChild(sparkle);
+                }, 1000);
+            }
+        }
+        
+        // Open letter animation
+        function openLetter() {
+            isLetterOpen = true;
+            instructions.style.display = 'none';
+            
+            // Open envelope
+            envelope.classList.add('opened');
+            
+            // Show and animate letter paper
+            setTimeout(() => {
+                letterPaper.style.display = 'block';
+                setTimeout(() => {
+                    letterPaper.classList.add('expanding');
+                }, 100);
+                
+                // Expand to fullscreen
+                setTimeout(() => {
+                    letterPaper.classList.add('fullscreen');
+                    mainContainer.style.display = 'none';
+                }, 1200);
+                
+                // Show close button after content is visible
+                setTimeout(() => {
+                    closeButton.classList.add('visible');
+                }, 2500);
+            }, 800);
+        }
+        
+        // Close letter animation
+        closeButton.addEventListener('click', function() {
+            if (isClosing) return;
+            isClosing = true;
+            
+            closeButton.classList.remove('visible');
+            
+            // Reverse the animation
+            letterPaper.classList.remove('fullscreen');
+            
+            setTimeout(() => {
+                letterPaper.classList.remove('expanding');
+                
+                setTimeout(() => {
+                    letterPaper.style.display = 'none';
+                    mainContainer.style.display = 'flex';
+                    
+                    // Close envelope
+                    envelope.classList.remove('opened');
+                    heartSeal.style.display = 'none';
+                    
+                    // Show thank you message
+                    setTimeout(() => {
+                        thankYou.classList.add('visible');
+                        
+                        // Auto-hide thank you after 4 seconds
+                        setTimeout(() => {
+                            thankYou.classList.remove('visible');
+                        }, 4000);
+                    }, 500);
+                }, 800);
+            }, 600);
+        });
+        
+        // Auto-scroll functionality for letter content
+        let isAutoScrolling = false;
+        let autoScrollTimer;
+        
+        function startAutoScroll() {
+            if (isAutoScrolling) return;
+            isAutoScrolling = true;
+            
+            const scrollContainer = letterPaper;
+            const scrollSpeed = 30; // pixels per second
+            const scrollStep = 1;
+            
+            autoScrollTimer = setInterval(() => {
+                if (scrollContainer.scrollTop < scrollContainer.scrollHeight - scrollContainer.clientHeight) {
+                    scrollContainer.scrollTop += scrollStep;
+                } else {
+                    // Reached bottom, show close button if not visible
+                    if (!closeButton.classList.contains('visible')) {
+                        closeButton.classList.add('visible');
+                    }
+                    clearInterval(autoScrollTimer);
+                    isAutoScrolling = false;
+                }
+            }, 1000 / scrollSpeed);
+        }
+        
+        // Start auto-scroll when letter becomes fullscreen
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.target === letterPaper && letterPaper.classList.contains('fullscreen')) {
+                    setTimeout(() => {
+                        startAutoScroll();
+                    }, 1000);
+                }
+            });
+        });
+        
+        observer.observe(letterPaper, { attributes: true, attributeFilter: ['class'] });
+        
+        // Manual scroll detection (pause auto-scroll if user scrolls manually)
+        letterPaper.addEventListener('wheel', () => {
+            if (isAutoScrolling) {
+                clearInterval(autoScrollTimer);
+                isAutoScrolling = false;
+            }
+        });
+        
+        letterPaper.addEventListener('touch', () => {
+            if (isAutoScrolling) {
+                clearInterval(autoScrollTimer);
+                isAutoScrolling = false;
+            }
+        });
+        
+        // Envelope hover effect with sound-like vibration (visual feedback)
+        envelope.addEventListener('mouseenter', function() {
+            if (!isLetterOpen) {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 10);
+            }
+        });
+        
+        // Add touch events for better mobile experience
+        let touchStartY = 0;
+        
+        letterPaper.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+            if (isAutoScrolling) {
+                clearInterval(autoScrollTimer);
+                isAutoScrolling = false;
+            }
+        });
+        
+        letterPaper.addEventListener('touchmove', (e) => {
+            const touchY = e.touches[0].clientY;
+            const deltaY = touchStartY - touchY;
+            
+            if (deltaY > 0) {
+                // Scrolling down
+                letterPaper.scrollTop += deltaY * 0.5;
+            } else {
+                // Scrolling up
+                letterPaper.scrollTop += deltaY * 0.5;
+            }
+        });
+        
+        // Prevent default scroll behavior on mobile
+        letterPaper.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
+        
+        // Add particle effects for ambiance
+        function createHeartParticles() {
+            setInterval(() => {
+                if (!isLetterOpen) {
+                    const particle = document.createElement('div');
+                    particle.textContent = Math.random() > 0.5 ? '💕' : '✨';
+                    particle.style.position = 'fixed';
+                    particle.style.left = Math.random() * window.innerWidth + 'px';
+                    particle.style.top = '-20px';
+                    particle.style.fontSize = '0.8rem';
+                    particle.style.pointerEvents = 'none';
+                    particle.style.zIndex = '1';
+                    particle.style.opacity = '0.6';
+                    particle.style.transition = 'all 8s linear';
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        particle.style.top = window.innerHeight + 20 + 'px';
+                        particle.style.transform = 'rotate(360deg)';
+                        particle.style.opacity = '0';
+                    }, 100);
+                    
+                    setTimeout(() => {
+                        if (document.body.contains(particle)) {
+                            document.body.removeChild(particle);
+                        }
+                    }, 8000);
+                }
+            }, 2000);
+        }
+        
+        // Add breathing animation to envelope
+        function addBreathingAnimation() {
+            setInterval(() => {
+                if (!isLetterOpen && !isClosing) {
+                    envelope.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        envelope.style.transform = 'scale(1)';
+                    }, 1000);
+                }
+            }, 3000);
+        }
+        
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingElements();
+            createHeartParticles();
+            addBreathingAnimation();
+            
+            // Add some delay before showing initial instruction
+            setTimeout(() => {
+                instructions.style.opacity = '1';
+            }, 1000);
+        });
+        
+        // Add window resize handler for responsive design
+        window.addEventListener('resize', function() {
+            if (letterPaper.classList.contains('fullscreen')) {
+                // Recalculate positions if needed
+                letterPaper.style.width = '100vw';
+                letterPaper.style.height = '100vh';
+            }
+        });
+        
+        // Preload any additional animations or effects
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shimmer {
+                0% { background-position: -200px 0; }
+                100% { background-position: 200px 0; }
+            }
+            
+            .envelope:hover .heart-seal {
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+                background-size: 200px 100%;
+                animation: shimmer 1.5s infinite;
+            }
+            
+            .letter-paper.fullscreen .letter-content p {
+                animation: fadeInUp 0.8s ease-out forwards;
+                animation-delay: calc(var(--index, 0) * 0.1s);
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            
+            @keyframes fadeInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Add staggered animation to paragraphs
+        setTimeout(() => {
+            const paragraphs = document.querySelectorAll('.letter-content p');
+            paragraphs.forEach((p, index) => {
+                p.style.setProperty('--index', index);
+            });
+        }, 100);
+        
+        // Easter egg: Double-tap envelope for special effect
+        let tapCount = 0;
+        let tapTimer;
+        
+        envelope.addEventListener('click', function(e) {
+            if (e.target === heartSeal) return;
+            
+            tapCount++;
+            clearTimeout(tapTimer);
+            
+            tapTimer = setTimeout(() => {
+                if (tapCount === 2 && !isLetterOpen) {
+                    // Special double-tap effect
+                    createHeartBurst(e.pageX, e.pageY);
+                }
+                tapCount = 0;
+            }, 300);
+        });
+        
+        function createHeartBurst(x, y) {
+            const hearts = ['💖', '💕', '💗', '💘', '🩷', '❤️', '💝'];
+            
+            for (let i = 0; i < 12; i++) {
+                const heart = document.createElement('div');
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.position = 'fixed';
+                heart.style.left = x + 'px';
+                heart.style.top = y + 'px';
+                heart.style.fontSize = '1.5rem';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '1000';
+                heart.style.transition = 'all 2s ease-out';
+                document.body.appendChild(heart);
+                
+                const angle = (i * 30) * Math.PI / 180;
+                const distance = 100 + Math.random() * 100;
+                
+                setTimeout(() => {
+                    heart.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0) rotate(720deg)`;
+                    heart.style.opacity = '0';
+                }, 100);
+                
+                setTimeout(() => {
+                    if (document.body.contains(heart)) {
+                        document.body.removeChild(heart);
+                    }
+                }, 2000);
+            }
+        }
+        
+    </script>
+</body>
+</html>
