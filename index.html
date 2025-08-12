@@ -92,59 +92,61 @@
             box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
         }
         
-        .envelope-front {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
-            border-radius: 8px;
-            border: 2px solid #FF69B4;
-            transform-origin: top;
-            transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
-            z-index: 2;
-        }
-        
-        .envelope-front::before {
+       .envelope-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
+    border-radius: 8px;
+    border: 2px solid #FF69B4;
+    transform-origin: top center; /* clave para que el giro salga limpio */
+    transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+    z-index: 2;
+}
+
+.envelope-front::before {
     content: '';
     position: absolute;
-    top: -1px; /* ahora se coloca arriba */
+    top: 0px;
     left: 50%;
-    transform: translateX(-50%) rotate(180deg); /* invertimos el triángulo */
+    transform: translateX(-50%) rotate(180deg);
     width: 0;
     height: 0;
-    border-left: 140px solid transparent;
-    border-right: 140px solid transparent;
-    border-bottom: 90px solid #FFB6C1; /* cambiamos de border-top a border-bottom */
+    border-left: 138px solid transparent;
+    border-right: 138px solid transparent;
+    border-bottom: 125px solid #FFB6C1; /* ajustado para encajar mejor */
     border-radius: 4px;
 }
 
+.envelope.opened .envelope-front {
+    transform: rotateX(-105deg); /* menos inclinación para coordinar con el alto real */
+    transition: transform 0.6s ease-in-out;
+}
+
         
-        .envelope.opened .envelope-front {
-            transform: rotateX(-120deg);
-        }
-        
-        /* Heart seal */
-        .heart-seal {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
-            color: #FF1493;
-            z-index: 3;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            user-select: none;
-            background: radial-gradient(circle, rgba(255, 20, 147, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            border: 2px solid rgba(255, 20, 147, 0.2);
-        }
+       /* Heart seal */
+.heart-seal {
+    position: absolute;
+    top: 78px; /* lo subimos un poco */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px; /* más grande */
+    height: 70px; /* más grande */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.6rem; /* aumenta tamaño del corazón */
+    color: #FF1493;
+    z-index: 3;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    user-select: none;
+    background: radial-gradient(circle, rgba(255, 20, 147, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    border: 2px solid rgba(255, 20, 147, 0.2);
+}
+
         
         .heart-seal:hover {
             transform: translateX(-50%) scale(1.1);
@@ -247,7 +249,18 @@
             margin-bottom: 25px;
             text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
         }
-        
+
+        .letter-content h2 {
+    font-family: 'Cute Font', cursive;
+    font-size: 1.25rem;
+    color: #FF1493;
+    margin: 6px 0 18px 0;
+    text-align: left;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(255,105,180,0.18);
+    letter-spacing: 0.2px;
+}
+
         .letter-content p {
             margin-bottom: 16px;
             text-align: justify;
@@ -272,7 +285,7 @@
         /* Close button */
         .close-button {
             position: fixed;
-            bottom: 20px;
+            bottom: 110px;
             left: 50%;
             transform: translateX(-50%);
             background: linear-gradient(135deg, #FF69B4, #FF1493);
@@ -339,7 +352,7 @@
         /* Instructions */
         .instructions {
             position: absolute;
-            bottom: 20px;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
@@ -368,206 +381,6 @@
             z-index: 1002;
         }
         
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .envelope {
-                width: 240px;
-                height: 160px;
-            }
-            
-            .envelope-front::before {
-                border-left: 120px solid transparent;
-                border-right: 120px solid transparent;
-                border-top: 80px solid #FFB6C1;
-            }
-            
-            .heart-seal {
-                width: 55px;
-                height: 55px;
-                font-size: 2rem;
-                bottom: 12px;
-            }
-            
-            .letter-paper.fullscreen {
-                padding: 20px;
-            }
-            
-            .letter-content {
-                font-size: 0.9rem;
-                line-height: 1.6;
-            }
-            
-            .letter-content h1 {
-                font-size: 2rem;
-                margin-bottom: 20px;
-            }
-            
-            .letter-content .signature {
-                font-size: 1.2rem;
-                margin-top: 25px;
-            }
-            
-            .instructions {
-                font-size: 1rem;
-                bottom: 15px;
-            }
-            
-            .close-button {
-                bottom: 15px;
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-            
-            .thank-you {
-                padding: 25px;
-                font-size: 1.3rem;
-            }
-            
-            .floating-heart {
-                font-size: 1rem;
-            }
-            
-            .floating-star {
-                font-size: 0.9rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .envelope {
-                width: 200px;
-                height: 140px;
-            }
-            
-            .envelope-front::before {
-                border-left: 100px solid transparent;
-                border-right: 100px solid transparent;
-                border-top: 70px solid #FFB6C1;
-            }
-            
-            .heart-seal {
-                width: 50px;
-                height: 50px;
-                font-size: 1.8rem;
-                bottom: 10px;
-            }
-            
-            .letter-paper.fullscreen {
-                padding: 15px;
-            }
-            
-            .letter-content {
-                font-size: 0.85rem;
-                line-height: 1.5;
-            }
-            
-            .letter-content h1 {
-                font-size: 1.8rem;
-                margin-bottom: 15px;
-            }
-            
-            .letter-content p {
-                margin-bottom: 14px;
-            }
-            
-            .letter-content .signature {
-                font-size: 1.1rem;
-                margin-top: 20px;
-            }
-            
-            .instructions {
-                font-size: 0.9rem;
-                bottom: 12px;
-            }
-            
-            .close-button {
-                bottom: 12px;
-                padding: 8px 16px;
-                font-size: 0.85rem;
-            }
-            
-            .thank-you {
-                padding: 20px;
-                font-size: 1.2rem;
-            }
-            
-            .thank-you .heart {
-                font-size: 2rem;
-                margin: 12px 0;
-            }
-        }
-        
-        /* Extra small devices */
-        @media (max-width: 360px) {
-            .container {
-                padding: 8px;
-            }
-            
-            .envelope {
-                width: 180px;
-                height: 120px;
-            }
-            
-            .envelope-front::before {
-                border-left: 90px solid transparent;
-                border-right: 90px solid transparent;
-                border-top: 60px solid #FFB6C1;
-            }
-            
-            .heart-seal {
-                width: 45px;
-                height: 45px;
-                font-size: 1.6rem;
-                bottom: 8px;
-            }
-            
-            .letter-content {
-                font-size: 0.8rem;
-                line-height: 1.4;
-            }
-            
-            .letter-content h1 {
-                font-size: 1.6rem;
-            }
-            
-            .instructions {
-                font-size: 0.8rem;
-                bottom: 10px;
-            }
-            
-            .close-button {
-                bottom: 10px;
-                padding: 6px 12px;
-                font-size: 0.8rem;
-            }
-            
-            .copyright {
-                font-size: 0.6rem;
-                bottom: 5px;
-            }
-        }
-        
-        /* Landscape orientation on mobile */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .container {
-                min-height: 100vh;
-                align-items: center;
-            }
-            
-            .envelope {
-                width: 200px;
-                height: 130px;
-            }
-            
-            .instructions {
-                bottom: 10px;
-                font-size: 0.9rem;
-            }
-        }
-        
         .hidden {
             display: none;
         }
@@ -592,6 +405,148 @@
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
         }
+
+        /* ------------------------------
+   Responsive: desde PC grande a Smartwatch
+   Pegar al final del <style>
+   ------------------------------ */
+
+/* Extra large desktop (pantallas muy grandes, 1600px+) */
+@media (min-width: 1600px) {
+  .envelope { width: 420px; height: 270px; }
+  .envelope-front::before { border-left: 210px solid transparent; border-right: 210px solid transparent; border-bottom: 190px solid #FFB6C1; }
+  .heart-seal { top: 108px; width: 110px; height: 110px; font-size: 4rem; }
+  .letter-paper { width: 640px; height: 520px; }
+  .letter-paper.fullscreen { padding: 40px; }
+  .letter-content h1 { font-size: 3rem; }
+  .close-button { bottom: 120px; padding: 14px 30px; font-size: 1.05rem; }
+  .instructions { bottom: 80px; font-size: 1.15rem; }
+  .thank-you { font-size: 1.6rem; padding: 36px; }
+}
+
+/* Desktop / Large laptop (1200px–1599px) */
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .envelope { width: 360px; height: 230px; }
+  .envelope-front::before { border-left: 178px solid transparent; border-right: 178px solid transparent; border-bottom: 160px solid #FFB6C1; }
+  .heart-seal { top: 95px; width: 90px; height: 90px; font-size: 3.2rem; }
+  .letter-paper { width: 520px; height: 420px; }
+  .letter-content h1 { font-size: 2.6rem; }
+  .close-button { bottom: 115px; }
+  .instructions { bottom: 70px; }
+}
+
+/* Medium laptop / small desktop (992px–1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .envelope { width: 320px; height: 205px; }
+  .envelope-front::before { border-left: 150px solid transparent; border-right: 150px solid transparent; border-bottom: 140px solid #FFB6C1; }
+  .heart-seal { top: 88px; width: 80px; height: 80px; font-size: 3rem; }
+  .letter-paper { width: 420px; height: 350px; }
+  .letter-content h1 { font-size: 2.4rem; }
+}
+
+/* Tablets landscape / large tablets (769px–991px) */
+@media (min-width: 769px) and (max-width: 991px) {
+  .envelope { width: 300px; height: 190px; }
+  .envelope-front::before { border-left: 138px solid transparent; border-right: 138px solid transparent; border-bottom: 125px solid #FFB6C1; }
+  .heart-seal { top: 82px; width: 76px; height: 76px; font-size: 2.8rem; }
+  .letter-paper { width: 360px; height: 320px; }
+  .letter-content h1 { font-size: 2.2rem; }
+  .close-button { bottom: 110px; }
+  .instructions { bottom: 60px; font-size: 1.05rem; }
+}
+
+/* Tablets portrait / Phablets (600px–768px) */
+@media (min-width: 600px) and (max-width: 768px) {
+  .envelope { width: 280px; height: 180px; transform-origin: center top; }
+  .envelope-front::before { border-left: 128px solid transparent; border-right: 128px solid transparent; border-bottom: 115px solid #FFB6C1; top: 0; }
+  .heart-seal { top: 78px; width: 72px; height: 72px; font-size: 2.4rem; }
+  .letter-paper { width: 320px; height: 300px; }
+  .letter-paper.fullscreen { padding: 22px; }
+  .letter-content h1 { font-size: 2rem; }
+  .instructions { bottom: 55px; font-size: 1rem; }
+}
+
+/* Large phones (420px–599px) */
+@media (min-width: 420px) and (max-width: 599px) {
+  .envelope { width: 250px; height: 160px; }
+  .envelope-front::before { border-left: 115px solid transparent; border-right: 115px solid transparent; border-bottom: 100px solid #FFB6C1; }
+  .heart-seal { top: 70px; width: 64px; height: 64px; font-size: 2.2rem; }
+  .letter-paper { width: 280px; height: 240px; transform: translate(-50%, -50%) scale(0.98); }
+  .letter-content h1 { font-size: 1.8rem; }
+  .close-button { bottom: 95px; padding: 10px 22px; }
+  .instructions { bottom: 50px; font-size: 0.98rem; }
+  .floating-heart, .floating-star { opacity: 0.25; font-size: 0.95rem; }
+}
+
+/* Medium phones (360px–419px) */
+@media (min-width: 360px) and (max-width: 419px) {
+  .envelope { width: 220px; height: 150px; }
+  .envelope-front::before { border-left: 98px solid transparent; border-right: 98px solid transparent; border-bottom: 86px solid #FFB6C1; }
+  .heart-seal { top: 66px; width: 58px; height: 58px; font-size: 2rem; }
+  .letter-paper { width: 240px; height: 200px; }
+  .letter-content h1 { font-size: 1.6rem; }
+  .close-button { bottom: 85px; font-size: 0.95rem; padding: 9px 20px; }
+  .instructions { bottom: 46px; font-size: 0.95rem; }
+}
+
+/* Small phones (320px–359px) */
+@media (min-width: 320px) and (max-width: 359px) {
+  .envelope { width: 200px; height: 140px; }
+  .envelope-front::before { border-left: 88px solid transparent; border-right: 88px solid transparent; border-bottom: 76px solid #FFB6C1; }
+  .heart-seal { top: 60px; width: 52px; height: 52px; font-size: 1.8rem; }
+  .letter-paper { width: 220px; height: 180px; }
+  .letter-content h1 { font-size: 1.45rem; margin-bottom: 18px; }
+  .close-button { bottom: 78px; padding: 8px 18px; font-size: 0.9rem; }
+  .instructions { bottom: 42px; font-size: 0.9rem; }
+  .floating-heart, .floating-star { font-size: 0.9rem; opacity: 0.2; }
+}
+
+/* Very small phones / tiny screens (240px–319px) */
+@media (min-width: 240px) and (max-width: 319px) {
+  .envelope { width: 170px; height: 120px; }
+  .envelope-front::before { border-left: 74px solid transparent; border-right: 74px solid transparent; border-bottom: 64px solid #FFB6C1; }
+  .heart-seal { top: 52px; width: 44px; height: 44px; font-size: 1.4rem; }
+  .letter-paper { width: 190px; height: 160px; }
+  .letter-content h1 { font-size: 1.2rem; }
+  .close-button { bottom: 70px; padding: 7px 16px; font-size: 0.85rem; border-radius: 20px; }
+  .instructions { bottom: 36px; font-size: 0.85rem; }
+  .thank-you { padding: 18px; font-size: 1.1rem; }
+  .floating-heart, .floating-star { opacity: 0.15; }
+}
+
+/* Smartwatch / pantallas muy pequeñas (<=239px) */
+@media (max-width: 239px) {
+  /* Reduce al máximo y evita solapamientos */
+  .envelope { width: 140px; height: 100px; margin-top: 8px; }
+  .envelope-front::before { border-left: 58px solid transparent; border-right: 58px solid transparent; border-bottom: 50px solid #FFB6C1; }
+  .heart-seal { top: 44px; width: 38px; height: 38px; font-size: 1.1rem; }
+  .letter-paper { width: 160px; height: 140px; left: 50%; top: 52%; transform: translate(-50%, -50%) scale(0.98); padding: 10px; }
+  .letter-paper.fullscreen { width: 100vw; height: 100vh; padding: 12px; overflow: auto; }
+  .letter-content { font-size: 0.88rem; line-height: 1.4; }
+  .letter-content h1 { font-size: 1.1rem; }
+  .close-button { bottom: 56px; padding: 6px 12px; font-size: 0.8rem; border-radius: 18px; }
+  .instructions { bottom: 28px; font-size: 0.78rem; }
+  .floating-elements { display: none; } /* ahorra recursos en pantallas diminutas */
+}
+
+/* Landscape adjustments for narrow screens (mejora en móviles apaisados) */
+@media (max-width: 480px) and (orientation: landscape) {
+  .container { padding: 8px; align-items: flex-start; }
+  .envelope { transform: scale(0.95); margin-top: 10px; }
+  .letter-paper { top: 55%; left: 50%; transform: translate(-50%, -40%) scale(0.95); }
+  .instructions { bottom: 20px; left: 50%; transform: translateX(-50%); }
+}
+
+/* Accessibility: aumenta contraste/espaciado cuando prefieren-reduced-motion o prefer-contrast */
+@media (prefers-reduced-motion: reduce) {
+  .floating-heart, .floating-star, .heart-seal, .envelope { animation: none !important; transition: none !important; }
+}
+
+@media (prefers-contrast: more) {
+  body { background: linear-gradient(135deg, #FFDDE6 0%, #FFF0F3 50%, #FFE8F2 100%); }
+  .envelope-back, .envelope-front { box-shadow: 0 8px 30px rgba(0,0,0,0.25); border-width: 3px; }
+  .letter-paper { border-width: 3px; }
+}
     </style>
 </head>
 <body>
@@ -615,80 +570,95 @@
     <!-- Letter paper -->
     <div class="letter-paper" id="letterPaper">
         <div class="letter-content" id="letterContent">
-            <h1>소정아 💕</h1>
-            
-            <p>오늘은 너에게 특별한 걸 주고 싶었어… 언제든 나를 가까이 느끼고 싶을 때 꺼내 볼 수 있는, 마음속에 간직할 수 있는 무언가를.</p>
-            
-            <p>이건 내 마음을 담은 감사의 표시야 — <span class="highlight">나의 여자친구가 되어주고, 나를 기다려주고, 이해해주고</span>, 그리고 네 마음이 외로울 때조차 내 곁에 있어준 너에게.</p>
-            
-            <p>먼저… <span class="highlight">미안하다고 말하고 싶어.</span><br>
-            처음에 내가 너를 먼저 찾아가지 못한 것, 그리고 그로 인해 네가 외로움을 느끼게 했던 시간들… 정말 미안해.</p>
-            
-            <p>정말 너를 보러 가고 싶었고, 수없이 생각했지만, 그럴 여유가 없었어. 그리고 조금이라도 모아두면, 아버지가 생활비를 도와달라고 하셔서… 결국 다 없어졌어.</p>
-            
-            <p>하지만 <span class="highlight">네 덕분에 지금은 노트북도 있고</span>, 내가 정말 열정을 쏟는 그 과정(수업)을 들을 수 있는 돈도 있어. 이건 나의 미래를 열어줄 큰 문이 될 거야.</p>
-            
-            <p>이제는 좀 더 자유롭고 편하게 움직일 수 있어… <span class="highlight">그건 전부 너 덕분이야.</span></p>
-            
-            <p>너는 내가 말로 다 설명할 수 없을 만큼 내 삶을 더 좋게 만들어줬어.<br>
-            <span class="highlight">너는 내게 하나님이 주신 축복이야.</span></p>
-            
-            <p><span class="highlight">나의 가장 큰 선물, 가장 아름다운 보물, 내가 세상에서 가장 사랑하는 사람, 나의 꿈, 나의 목표, 나의 최우선이야.</span></p>
-            
-            <p>나는 국제 회사에서 좋은 직장을 얻기 위해 열심히 노력할 거야 (미국이나 캐나다를 목표로 하고 있어). 그래서 거기서 너를 만날 수도 있고, 서로 번갈아 가며 자주 만날 수 있게 하려고.</p>
-            
-            <p><span class="highlight">기억해줘 — 너는 이제 더 이상 혼자가 아니야.</span><br>
-            우리는 이제 변화를 만들 수 있는 힘이 있어. 사랑과 헌신이 가득한, 평범하고 안정된 연애를 할 수 있어.</p>
-            
-            <p><span class="highlight">내 마음은 단기적인 게 아니야.</span><br>
-            난 너와 결혼하고, 아이도 갖고 싶어 — 전에 말한 것처럼.</p>
-            
-            <p>너와 너의 가족에게 진심으로 감사하고, 꼭 직접 만나 인사드리고 싶어. 그리고 언젠가 너도 내 가족을 만나주길 바라.</p>
-            
-            <p>아마 네가 처음 나를 만나러 올 때, 우리 관계를 아버지께는 바로 말하지 않을 수도 있어. 나는 내가 좀 더 안정적인 수입을 얻을 때 말씀드리고 싶어.</p>
-            
-            <p>하지만 어떤 상황이든, <span class="highlight">너와 함께한 모든 순간은 특별했어</span> — 모든 웃음, 모든 눈물, 모든 시선, 모든 키스, 그리고 모든 작은 행동들까지…</p>
-            
-            <p><span class="highlight">그 모든 게 내 인생에서 가장 큰 모험이었어.</span></p>
-            
-            <p>그 모든 순간들이 나에게 이유를 주고, 목표를 주고, 꿈을 주고, 나를 하나님께 더 가까이 이끌었어. 내가 복음과 은혜에 대해 너와 나눴던 그 날을 절대 잊지 못해.</p>
-            
-            <p>소정아… <span class="highlight">우리의 관계는 나에게 진정한 사랑의 아름다움을 가르쳐줬어.</span></p>
-            
-            <p>그래서 너에게 잊지 못할 선물을 주고 싶었고, 내 프로그래밍 실력을 이용해서 이 가상의 편지를 만들었어. <span class="highlight">이건 단순한 글이 아니라, 네가 영원히 간직할 수 있는 내 마음의 한 조각이야.</span></p>
-            
-            <p><span class="highlight">나는 너를 사랑해. 진심으로, 깊이.</span><br>
-            내가 너에게 느끼는 이 감정은 그 누구에게도 느껴본 적 없는 거야.</p>
-            
-            <p>너를 생각하는 것만으로도 웃게 되는, 너무나도 따뜻하고 진짜인 마음이야. <span class="highlight">네가 나를 만나러 온다고 생각하면, 너무 행복해서 당장이라도 뛰어오를 것 같아.</span></p>
-            
-            <p><span class="highlight">네가 내 앞에 서 있는 그 날…</span><br>
-            나는 잠시 얼어붙을 거고, 눈물이 흐를 거야. 그리고 바로 네 품에 달려가서 꽉 안고, "사랑해"라고 말할 거야.</p>
-            
-            <p>그 순간, 우리의 거리는 완전히 사라질 거야. 네 아름다운 눈을 바라보고, 네 얼굴을 쓰다듬고, 그리고 키스할 거야 — <span class="highlight">네가 느껴본 적 없는 가장 순수하고 깊은 사랑으로.</span></p>
-            
-            <p>그리고 여기 내 위치를 남길게. 네가 나를 찾을 수 있도록: <span class="highlight">코스타리카, 카르타고, 카르타고, 케브라디야.</span></p>
-            
-            <p>두 개의 레일이 있는 큰 트랙, 두 개의 큰 다리, 그리고 Paseo Metrópoli라는 쇼핑몰이 보이면 가까워진 거야. 거기를 지나면, 스타벅스, 맥도날드, 타코벨, 피자헛 같은 유명한 식당들이 있는 길이 나와.</p>
-            
-            <p>약국, 편의점, 여러 가게들도 보일 거야. 주유소에서 꺾어 들어가면, 시골 풍경이 있는 길이 나와. 그곳에는 쇼핑센터, 고급 슈퍼마켓, 심지어 개인 병원도 있어.</p>
-            
-            <p>그걸 보면, 너는 제대로 오고 있는 거야. 곧 내가 전에 보여줬던 공원이 나와. 그 뒤에는, 내가 공사 중일 때 보여줬던 큰 슈퍼마켓이 있어. <span class="highlight">거기서 나를 만날 수 있어.</span></p>
-            
-            <p>네가 여행 준비가 되면, 내 GPS 위치를 보내줄게. 그리고 네가 길을 알아볼 수 있도록 직접 걸으면서 안내할 거야. 그다음, 우리 함께 도시로 나가서 — 내 집과 문화, 그리고 제일 중요한… 음식들을 보여줄게.</p>
-            
-            <p><span class="highlight">소정아, 나에게 너는 전부야.</span><br>
-            나는 오직 너만 원하고, 세상이 끝날 때까지 매일 네 곁에 있고 싶어.</p>
-            
-            <p>이 편지에 답장하지 않아도 돼 — 그냥 간직해줘. 언젠가는 이 편지가 너에게 더 큰 의미가 될 거야.</p>
-            
-            <p>나는 이걸 네가 준 노트북으로, 공부를 마친 후에 썼어 — <span class="highlight">너는 나에게 창작과 꿈을 꾸게 하는 영감을 주니까.</span></p>
-            
-            <div class="signature">
-                <span class="highlight">사랑해, 나의 소정아.</span><br>
-                항상, 그리고 영원히.<br><br>
-                오직 너의,<br>
-                아론 🩷
+<h1>Sojeong 💕 — foryousojeong 2.0 😂</h1>
+
+<p>내 사랑, 분명히 <u>웹사이트</u>가 조금 바뀐 걸 눈치챌 거야 — 나는 이걸 <strong>foryousojeong 2.0</strong>이라고 불러. 다양한 화면 크기에 맞게 업데이트되고 최적화되었고 몇 가지 새로운 놀라움도 있어. 하지만 무엇보다 중요한 건 변하지 않았어: 이 모든 것은 너를 향한 내 마음의 한 조각이야.</p>
+
+<p>오늘은 너에게 특별한 걸 주고 싶어… 네가 날 가깝게 느끼고 싶을 때마다 꺼내 읽을 수 있는 것, 매일 마음속에 간직할 수 있는 작은 기억이 되길 바래.</p>
+
+<p>먼저, <u>용서를 구하고 싶어</u> — 너를 데리러 가지 못했던 순간들, 내 부재로 네가 외로웠던 시간들에 대해. 정말 미안해.</p>
+
+<p>항상 너를 데리러 가고 싶었다는 걸 알아줬으면 해; 난 진심이었어. 가족 문제, 생활비, 여러 상황들이 복잡했지만 — 네 덕분에 이제 노트북이 생겼고 더 자유롭게 공부할 기회가 생겼어. <u>너에게 감사해</u> 덕분에 내가 열정을 느끼는 수업을 시작했고 우리 미래의 문이 열리는 것 같아.</p>
+
+<p><u>너는 내 삶의 축복이야.</u> 너는 아무것도 의도하지 않아도 나를 더 좋은 사람으로 만들었어. 너는 내 가장 소중한 선물, 내 보물, 내 꿈, 나의 우선순위야.</p>
+
+<p>내 계획은 더 좋은 직장을 얻기 위해 노력하는 거야 — 어쩌면 국제 기업에서, 미국이나 캐나다에서 — 그래야 우리가 더 자주 만날 수 있고 함께 안정되고 사랑이 가득한 삶을 쌓을 수 있을 것 같아.</p>
+
+<p><u>기억해: 이제 너는 혼자가 아니야.</u> 나는 너를 돌보고, 지지하고, 사랑과 책임으로 이 관계를 지키기 위해 싸울 거야.</p>
+
+<p>내 마음은 일시적인 것이 아니야. <u>나는 너와 결혼하고 아이를 갖고 싶어</u>, 전에 말했듯이. 너의 가족을 만나 인사하고 싶고, 적절한 때가 되면 네가 내 가족을 만나는 날도 오길 원해.</p>
+
+<p>처음 네가 올 때 아버지에게 모든 걸 바로 말하지 않을 수도 있어; 안정이 있을 때 말하고 싶어. 하지만 너와 함께한 모든 순간 — 웃음, 눈물, 눈빛, 작은 몸짓들 — 이 모든 것이 내 인생에서 가장 큰 모험이었어.</p>
+
+<p>진정한 사랑의 아름다움을 가르쳐줘서 고마워. 그래서 너에게 잊을 수 없는 것을 주고 싶었어: 내가 아는 프로그래밍으로 이 가상 편지를 만들었어. <u>단지 글이 아니라: 네가 영원히 간직할 수 있는 내 마음의 일부야.</u></p>
+
+<p><u>사랑해.—정말로, 깊이 사랑해.</u> 이 사랑은 내가 이전에 느껴본 어떤 것과도 달라. 너를 생각만 해도 미소가 나와. 네가 나를 보러 오는 상상만으로도 나를 참을 수 없을 만큼 기쁘게 해.</p>
+
+<p>네가 내 앞에 서 있는 그날, 아마 잠깐 말문이 막힐 거야, 기쁨의 눈물을 흘릴 거고, 뛰어나가 널 꼭 안고 말할 거야: “사랑해”. 그 순간 우리 사이의 거리는 사라질 거야. 네 눈을 보고, 네 얼굴을 쓰다듬고, 내가 가진 가장 순수한 사랑으로 네게 키스할 거야.</p>
+
+<p>여행할 준비가 되었을 때, 내가 KakaoTalk으로 보낸 동영상과 정보를 조심스럽게 보관해 둘게, 네가 길을 찾고 무사히 도착할 수 있게. 그리고 네가 오면 원하는 만큼 사진을 찍어 — 가족과 주변 사람들에게 보여줘. 거리가 허상이 아니라 참되고 좋은 무언가일 수 있다는 걸 보여주자: 우리의 사랑은 피상적이지 않고, 순수하고 깊은 것이라는 걸.</p>
+
+<p><u>내가 이 편지를 네게 건넸을 때 세상에 네 신뢰를 외쳤어</u> — 네가 준 노트북으로 공부를 마친 뒤 쓴 이 편지 때문에 — 넌 나에게 창작하고 꿈꾸고 매일 더 나아지게 하는 영감이니까.</p>
+
+<hr>
+
+<h2>우리가 함께 나누는 신앙에 관하여</h2>
+
+<p>이 부분은 우리가 소중히 여기는 <strong>참된 복음</strong>을 더 분명하게 전하려고 다듬었어 — 은혜와 구속, 소망의 메시지로서 우리를 붙들어 주었던 그 진리 말이야. 여기 간결하고 단단한 말로 적어둘게:</p>
+
+<p>하나님은 우리를 하나님의 형상대로 창조하셨고, 우리에게 놀라운 목적을 주셨어: 그분의 자녀, 동반자 되어 창조물을 다스리는 것이었어. 처음부터 하나님은 우리에게 완전하고 생명으로 가득한 세상을 주셨고, 거기는 거룩함 안에서 기쁨을 누리도록 마련된 곳이었어. 하나님은 사랑으로 우리에게 모든 것을 주셨고, 그분의 뜻은 선하며 그가 하시는 모든 일은 선해.</p>
+
+<p>하지만 원수는 거짓으로 그 연합을 깨뜨렸어. 그 거짓은 우리를 하나님으로부터 떼어 놓았고, 해를 끼치는 태도와 선택에 묶이게 했으며 우리로 하여금 의심하게 하고 원래의 자유로부터 멀어지게 했어. 그럼에도 불구하고 하나님은 우리를 버리지 않으셨어. 사랑으로 가까이 계시며 말씀하시고 기다리시며 우리를 회복시키기 위한 길을 예비하셨어.</p>
+
+<p>그 길의 중심에는 그리스도의 구속 사역이 있어: 그리스도를 통해 우리는 다시 하나님의 자녀로 받아들여졌어. 그분의 은혜로 우리는 죄와 죄책에서 깨끗하게 되었고, 용서와 존엄과 새 생명으로 회복되어 하나님 앞에 다시 세워졌어. 이것은 우리의 공로가 아니라 예수님의 온전한 사랑과 사역에 의한 것이야: 용서, 존귀함, 새 삶이 주어진 거야.</p>
+
+<p>그것이 바로 우리에게 소망을 되돌려 주고 우리를 붙들어 준 <u>참된 복음</u>이야: 창조하시고 사랑하시며 찾아 회복하시는 하나님. 그래서 오늘 우리는 담대히 말할 수 있어 — 우리가 귀하고 깨끗하며 그분과 교제하며 살도록 부르심받았다고.</p>
+
+<p>이제 우리의 책임은 단순하고 아름다워: 날마다 하나님과의 관계를 가꾸는 거야. 매일 그분을 더 알아가고 — 말씀을 읽고 기도하며 신뢰함으로 — 우리의 믿음(그분에 대한 신뢰)이 점점 더 굳건해지도록 하는 것. 그리스도인의 삶은 짐의 목록이 아니라 살아 있는 관계야: 그분과 동행하며 그분의 임재로 변화되고 그분의 선하심을 삶으로 드러내는 것.</p>
+
+<p>항상 기억하길 바래: 너는 하나님의 딸이야, 그분과 함께 다스리도록 창조되었고 거룩함과 자유로 부르심받았어. 그 가치는 누구도 빼앗을 수 없어. 혹시 의심이 들면 이 진리로 돌아와: 하나님은 너를 사랑하시고 용서하시며 완전히 회복시켜 주셨어.</p>
+
+<p>이 메시지는 우리가 사랑해 온 그 진리이며, 어려운 날들을 견디게 한 바로 그 참된 복음이야 — 우리를 하나로 묶고 미래에 소망을 주는 복음.</p>
+
+<hr>
+
+<h2>매일 읽을 세 가지 기억</h2>
+
+<ol>
+  <li><u>내가 너를 향한 사랑:</u> 나는 변함없고 인내하는 진실한 사랑으로 너를 사랑해. 나는 오늘도, 언제나 네 곁에 있을게.</li>
+  <li><u>너의 영적 가치와 내게의 너:</u> 너는 유일하고 특별하며 받아들여진 존재야. 너는 하나님의 형상으로 지음 받은 창조의 왕관이야. 누구에게도 너를 깎아내리게 하지 마.</li>
+  <li><u>복음(희망):</u> 하나님은 우리에게 용서와 회복과 새 생명을 제공하셔. 그 진리를 신뢰해; 힘이 필요할 때마다 너의 힘이 되게 해.</li>
+</ol>
+
+<hr>
+
+<h2>실무 안내 — 오는 법 (내 코너, 코스타리카)</h2>
+
+<p>네가 올 때 내가 한 걸음씩 안내할게. 내 위치: <u>Costa Rica, Cartago, Cartago, Quebradilla.</u></p>
+
+<p>두 개의 철로와 큰 다리 두 개, 그리고 Paseo Metrópoli라는 쇼핑몰이 보이면 가까워진 거야. 그다음에는 Starbucks, McDonald’s, Taco Bell, Pizza Hut 같은 식당들이 있는 길을 보게 될 거야; 약국들, 편의점, 상점들도 있어. 주유소에서 돌면 시골 풍경을 지나 큰 쇼핑몰과 대형 슈퍼마켓을 만나게 될 거야. 거기서 내가 기다리고 있을게.</p>
+
+<p>준비되면 KakaoTalk으로 GPS 위치를 보내고 사진과 동영상으로 한 걸음씩 동행하며 길을 잃지 않게 도울게. 그리고 우리 함께 도시도, 내 집도, 내 문화도, 그리고 내가 제일 좋아하는 음식도 소개할게.</p>
+
+<hr>
+
+<p><u>항상 강할 필요는 없어.</u> 나는 너를 지탱하려고 여기 있어, 판단하거나 상처 주거나 버리려고가 아니야. 내 사랑 때문에 죄책감을 느낄 필요 없어; 너는 사랑받을 자격이 있어. 네가 해준 모든 일에 감사하고 있어. 너는 충분해. 네가 의심하거나 도망치고 싶었던 순간들을 용서해; 이해해, 남의 시선과 때로는 상처 주는 전통들을 마주하는 건 쉽지 않았잖아.</p>
+
+<p>우릴 무너뜨리려는 목소리들을 무시하고 우리만의 이야기를 만들어 가자. 이건 우리 둘만의 관계야: 연결된 두 마음, 동기화된 심장. 드물고 소중한 것 — 지키고 즐기고 키워가자.</p>
+
+<p>네가 외롭고, 길을 잃고, 괴로울 때마다 이 편지를 열고 나와 함께 반복해: <u>“나는 사랑받고, 존중받고, 소중하다. 내 곁에는 나를 돌봐주고 내 가치를 가르쳐 주며 복음과 은혜를 보여 주는 남자친구가 있다.”</u></p>
+
+<hr>
+
+<p>소정아, 너는 나의 동반자이자 그리스도 안에서의 자매야. 너는 하나님이 내게 주신 선물이야, 그리고 나는 널 꼭 지킬 것을 약속해. 평생 기다려야 한다면 기쁘게 기다릴게. 내 사랑은 인내하며, 부드럽고 단호해.</p>
+
+<p>이 편지를 간직해. 향수나 두려움이 밀려올 때 읽어 — 피난처가 되어 줄 거야. 우리가 마주하는 날이 오면, 그 순간을 너와 함께 기뻐하며 축하할게.</p>
+
+<div class="signature">
+    <span class="highlight">사랑해, 나의 소정아.</span><br>
+    항상, 그리고 영원히.<br><br>
+    오직 너의,<br>
+    아론 🩷
             </div>
         </div>
     </div>
